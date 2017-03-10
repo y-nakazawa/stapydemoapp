@@ -1,0 +1,11 @@
+.DS_Store
+.metadata
+.project
+.pydevproject
+.settings/
+*.pyc
+media/
+.idea
+*~
+.python-version
+staticfiles/
