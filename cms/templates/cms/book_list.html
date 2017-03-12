@@ -12,7 +12,7 @@ table {
 
 {% block content %}
     <h3 class="page-header">書籍の一覧</h3>
-    <!-- <a href="{#% url 'cms:book_add' %#}" class="btn btn-default btn-sm">追加</a>-->
+    <a href="{% url 'cms:book_add' %}" class="btn btn-default btn-sm">追加</a>
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
@@ -31,11 +31,33 @@ table {
           <td>{{ book.publisher }}</td>
           <td>{{ book.page }}</td>
           <td>
-            <!-- <a href="{#% url 'cms:book_mod' book_id=book.id %#}" class="btn btn-default btn-sm">修正</a> -->
-            <!-- <a href="{#% url 'cms:book_del' book_id=book.id %#}" class="btn btn-default btn-sm">削除</a> -->
+            <a href="{% url 'cms:book_mod' book_id=book.id %}" class="btn btn-default btn-sm">修正</a>
+            <a href="{% url 'cms:book_del' book_id=book.id %}" class="btn btn-default btn-sm">削除</a>
           </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
+
+    {% if is_paginated %}
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+      {% else %}
+        <li class="disabled"><a href="#">&laquo;</a></li>
+      {% endif %}
+      {% for linkpage in page_obj.paginator.page_range %}
+        {% ifequal linkpage page_obj.number %}
+          <li  class="active"><a href="#">{{ linkpage }}</a></li>
+        {% else %}
+          <li><a href="?page={{ linkpage }}">{{ linkpage }}</a></li>
+        {% endifequal %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+      {% else %}
+        <li class="disabled"><a href="#">&raquo;</a></li>
+      {% endif %}
+    </ul>
+    {% endif %}
 {% endblock content %}
