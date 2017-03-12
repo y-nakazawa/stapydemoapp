@@ -1,0 +1,1 @@
+web: gunicorn --env DJANGO_SETTINGS_MODULE=stapydemo.settings stapydemo.wsgi --log-file -
